@@ -29,21 +29,23 @@ class _Home5State extends State<Home5> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Interest Calculator'),
+        title: const Text('Kamat kalkulátor'),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            picture('images/3.jpg'),
-            inputTextField('Principal', 'Enter Principal e.g. 12.000',
+            picture('images/3.png'),
+            inputTextField(
+                'Befektetés',
+                'Add meg a befektetés összegét pl: 1.000.000!',
                 principalController),
-            inputTextField('Rate of Interest', 'In percent', roiController),
+            inputTextField('Kamatráta', '%-ban', roiController),
             Row(
               children: [
                 Expanded(
                     child: inputTextField(
-                        'Term', 'Time in years', termController)),
+                        'Időszak', 'Időszak években', termController)),
                 Container(width: 20),
                 dropDown(_currencies)
               ],
@@ -52,9 +54,9 @@ class _Home5State extends State<Home5> {
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 children: [
-                  button('Calculate', calculateTotalReturn),
+                  button('Számol', calculateTotalReturn),
                   Container(width: 20),
-                  button('Reset', reset),
+                  button('Nulláz', reset),
                 ],
               ),
             ),
@@ -71,7 +73,7 @@ class _Home5State extends State<Home5> {
       child: Text(buttonText),
       onPressed: () {
         setState(() {
-          if (buttonText == 'Calculate') {
+          if (buttonText == 'Számol') {
             if (_formKey.currentState!.validate()) {
               _displayResult = buttonAction();
             }
@@ -108,7 +110,10 @@ class _Home5State extends State<Home5> {
   Widget picture(String path) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Image.asset(path, height: 250),
+      child: Image.asset(
+        path,
+        height: 150,
+      ),
     );
   }
 
@@ -119,7 +124,7 @@ class _Home5State extends State<Home5> {
       child: TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter number';
+            return 'Kérlek számot adj meg!';
           }
           return null;
         },
@@ -143,7 +148,7 @@ class _Home5State extends State<Home5> {
 
     double totalAmountPayable = principal + (principal * roi * term) / 100;
 
-    return 'After $term years, your investment will be worth $totalAmountPayable $_currencyItemSelected.';
+    return '$term év múlva a befektetésed $totalAmountPayable $_currencyItemSelected-t fog érni.';
   }
 
   void reset() {
