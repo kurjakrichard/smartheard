@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartheard/screens/note_detail.dart';
 
 class NoteList extends StatefulWidget {
   const NoteList({Key? key}) : super(key: key);
@@ -21,10 +22,10 @@ class _NoteListState extends State<NoteList> {
       ),
       body: getNoteListView(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          debugPrint('FAB clicked');
-        },
         tooltip: 'Add note',
+        onPressed: () {
+          navigatetoDetail('Add note');
+        },
         child: const Icon(Icons.add),
       ),
     );
@@ -37,26 +38,35 @@ class _NoteListState extends State<NoteList> {
         itemCount: count,
         itemBuilder: (BuildContext context, int position) {
           return Card(
-            color: Colors.white,
-            elevation: 2.0,
-            child: ListTile(
-              leading: const CircleAvatar(
-                backgroundColor: Colors.yellow,
-                child: Icon(Icons.keyboard_arrow_right),
-              ),
-              title: Text(
-                'Dummy Title',
-                style: titleStyle,
-              ),
-              trailing: const Icon(
-                Icons.delete,
-                color: Colors.grey,
-              ),
-              onTap: () {
-                debugPrint("ListTile clicked");
-              },
-            ),
-          );
+              color: Colors.white,
+              elevation: 2.0,
+              child: ListTile(
+                  leading: const CircleAvatar(
+                    backgroundColor: Colors.yellow,
+                    child: Icon(Icons.keyboard_arrow_right),
+                  ),
+                  title: Text(
+                    'Dummy Title',
+                    style: titleStyle,
+                  ),
+                  trailing: const Icon(
+                    Icons.delete,
+                    color: Colors.grey,
+                  ),
+                  onTap: () {
+                    navigatetoDetail('Edit note');
+                  }));
         });
+  }
+
+  void navigatetoDetail(String title) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return NoteDetail(title);
+        },
+      ),
+    );
   }
 }

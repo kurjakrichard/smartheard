@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 enum Priorities { High, Low }
 
 class NoteDetail extends StatefulWidget {
-  const NoteDetail({Key? key}) : super(key: key);
+  NoteDetail(this.title, {Key? key}) : super(key: key);
+
+  String title;
 
   @override
   State<StatefulWidget> createState() {
@@ -13,21 +15,17 @@ class NoteDetail extends StatefulWidget {
 }
 
 class NoteDetailState extends State<NoteDetail> {
-  var dropDownItemSelected;
+  Priorities dropDownItemSelected = Priorities.Low;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    dropDownItemSelected = Priorities.Low;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    TextStyle titleStyle = Theme.of(context).textTheme.subtitle1!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit note'),
+        title: Text(widget.title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -44,7 +42,7 @@ class NoteDetailState extends State<NoteDetail> {
                 }).toList(),
                 onChanged: (valueSelectedByUser) {
                   setState(() {
-                    dropDownItemSelected = valueSelectedByUser;
+                    dropDownItemSelected = valueSelectedByUser!;
                   });
                 },
               ),
@@ -83,7 +81,10 @@ class NoteDetailState extends State<NoteDetail> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      child: const Text('Save'),
+                      child: Text(
+                        'Save',
+                        style: titleStyle,
+                      ),
                       onPressed: () {
                         setState(() {
                           debugPrint('Save button clicked!');
@@ -96,7 +97,10 @@ class NoteDetailState extends State<NoteDetail> {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      child: const Text('Delete'),
+                      child: Text(
+                        'Delete',
+                        style: titleStyle,
+                      ),
                       onPressed: () {
                         setState(() {
                           debugPrint('Delete button clicked!');
