@@ -17,7 +17,11 @@ class _Home5State extends State<Home5> {
   @override
   void initState() {
     super.initState();
-    _currencyItemSelected = _currencies[0];
+    principalController.addListener(() {
+      setState(() {
+        _displayResult = principalController.text;
+      });
+    });
   }
 
   TextEditingController principalController = TextEditingController();
@@ -38,7 +42,7 @@ class _Home5State extends State<Home5> {
             picture('images/3.png'),
             inputTextField(
                 'Befektetés',
-                'Add meg a befektetés összegét pl: 1.000.000!',
+                'Add meg a befektetés összegét pl: 1.000.000',
                 principalController),
             inputTextField('Kamatráta', '%-ban', roiController),
             Row(
