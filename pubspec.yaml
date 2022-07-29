@@ -1,5 +1,5 @@
 name: smartheard
-description: A new Flutter project.
+description: Practices of Smartheard youtube channel.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -29,6 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite: ^2.0.3
+  path_provider: ^2.0.11
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.

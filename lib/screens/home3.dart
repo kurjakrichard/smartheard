@@ -10,7 +10,7 @@ class Home3 extends StatelessWidget {
         onPressed: () {
           debugPrint('FAB clicked');
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         title: const Text('bookpilot'),
@@ -32,7 +32,7 @@ class Home3 extends StatelessWidget {
               var snackBar = const SnackBar(
                 content: Text('Ez egy snackbar'),
               );
-              Scaffold.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
               debugPrint('${items[index]} was tapped');
             },
           );

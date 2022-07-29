@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smartheard/screens/note_detail.dart';
 import 'package:smartheard/screens/note_list.dart';
 /*import 'screens/home.dart';
 import 'screens/home2.dart';

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 enum Priorities { High, Low }
 
 class NoteDetail extends StatefulWidget {
-  NoteDetail(this.title, {Key? key}) : super(key: key);
+  const NoteDetail(this.title, {Key? key}) : super(key: key);
 
-  String title;
+ final String title;
 
   @override
   State<StatefulWidget> createState() {
