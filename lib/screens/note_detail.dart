@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-// ignore_for_file: constant_identifier_names
-enum Priorities { High, Low }
+enum Priorities { high, low }
 
 class NoteDetail extends StatefulWidget {
   NoteDetail(this.title, {Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class NoteDetail extends StatefulWidget {
 }
 
 class NoteDetailState extends State<NoteDetail> {
-  Priorities dropDownItemSelected = Priorities.Low;
+  Priorities dropDownItemSelected = Priorities.low;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
@@ -37,7 +36,8 @@ class NoteDetailState extends State<NoteDetail> {
                 items: Priorities.values.map((Priorities dropDownMenuItem) {
                   return DropdownMenuItem<Priorities>(
                     value: dropDownMenuItem,
-                    child: Text(dropDownMenuItem.name),
+                    child: Text(
+                        '${dropDownMenuItem.name[0].toUpperCase()}${dropDownMenuItem.name.substring(1, dropDownMenuItem.name.length)}'),
                   );
                 }).toList(),
                 onChanged: (valueSelectedByUser) {
