@@ -1,8 +1,8 @@
 class Note {
   int? _id;
-  String _title;
-  String _date;
-  bool _priority;
+  late String _title;
+  late String _date;
+  late bool _priority;
   String? _description;
 
   Note(this._title, this._date, this._priority, [this._description]);
@@ -32,5 +32,14 @@ class Note {
     map['description'] = _description;
 
     return map;
+  }
+
+//Extract a Note object to a Map object
+  Note.fromMapObject(Map<String, dynamic> map) {
+    _id = map['id'];
+    _title = map['title'];
+    _date = map['date'];
+    _priority = map['priority'];
+    _description = map['description'];
   }
 }
