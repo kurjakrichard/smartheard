@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartheard/screens/note_detail.dart';
+import 'note_detail.dart';
+import '../utils/database_helper.dart';
+import '../models/note.dart';
 
 class NoteList extends StatefulWidget {
   const NoteList({Key? key}) : super(key: key);
@@ -13,9 +15,13 @@ class NoteList extends StatefulWidget {
 
 class _NoteListState extends State<NoteList> {
   int count = 0;
+  DatabaseHelper databaseHelper = DatabaseHelper();
+  List<Note>? noteList;
 
   @override
   Widget build(BuildContext context) {
+    noteList ?? <Note>[];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

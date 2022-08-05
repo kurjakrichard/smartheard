@@ -9,8 +9,7 @@ class Note {
   Note.withId(this._id, this._title, this._date, this._priority,
       [this._description]);
 
-  int? get id => _id;
-  set id(int? value) => _id = value;
+  get id => _id;
   get title => _title;
   set title(value) => _title = value;
   get date => _date;
@@ -18,7 +17,8 @@ class Note {
   get priority => _priority;
   set priority(value) => _priority = value;
   get description => _description;
-  set description(value) => _description = value;
+  set description(value) =>
+      value.toString().length <= 255 ? description = value : null;
 
 //Convert a Note object to a Map opject
   Map<String, dynamic> toMap() {

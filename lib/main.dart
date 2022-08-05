@@ -24,6 +24,6 @@ class MyApp extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     primary: Colors.indigo, onPrimary: Colors.white)),
             appBarTheme: const AppBarTheme(color: Colors.indigo)),
-        home: const NoteList());
+        home: NoteList());
   }
 }
