@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../models/note.dart';
+import '../utils/database_helper.dart';
 
 enum Priorities { high, low }
 
 class NoteDetail extends StatefulWidget {
-  const NoteDetail(this.title, {Key? key}) : super(key: key);
+  const NoteDetail(this.note, this.title, {Key? key}) : super(key: key);
 
- final String title;
+  final String title;
+  final Note note;
 
   @override
   State<StatefulWidget> createState() {
@@ -14,13 +19,17 @@ class NoteDetail extends StatefulWidget {
 }
 
 class NoteDetailState extends State<NoteDetail> {
+  DatabaseHelper databaseHelper = DatabaseHelper();
   Priorities dropDownItemSelected = Priorities.low;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  Note? note = Note('', '', 0, '');
 
   @override
   Widget build(BuildContext context) {
     TextStyle titleStyle = Theme.of(context).textTheme.subtitle1!;
+    titleController.text = widget.note.title;
+    descriptionController.text = widget.note.description;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +41,7 @@ class NoteDetailState extends State<NoteDetail> {
           children: [
             ListTile(
               title: DropdownButton<Priorities>(
-                value: dropDownItemSelected,
+                value: getPriorityAsInt(note!.priority),
                 items: Priorities.values.map((Priorities dropDownMenuItem) {
                   return DropdownMenuItem<Priorities>(
                     value: dropDownMenuItem,
@@ -42,7 +51,8 @@ class NoteDetailState extends State<NoteDetail> {
                 }).toList(),
                 onChanged: (valueSelectedByUser) {
                   setState(() {
-                    dropDownItemSelected = valueSelectedByUser!;
+                    debugPrint('User selected $valueSelectedByUser');
+                    updatePriorityAsInt(valueSelectedByUser!);
                   });
                 },
               ),
@@ -53,6 +63,7 @@ class NoteDetailState extends State<NoteDetail> {
                 controller: titleController,
                 onChanged: (value) {
                   debugPrint('Valami változott');
+                  updateTitle();
                 },
                 decoration: InputDecoration(
                   labelText: 'Title',
@@ -67,6 +78,7 @@ class NoteDetailState extends State<NoteDetail> {
                 controller: descriptionController,
                 onChanged: (value) {
                   debugPrint('Valami változott');
+                  updateDescription();
                 },
                 decoration: InputDecoration(
                   labelText: 'Description',
@@ -88,6 +100,7 @@ class NoteDetailState extends State<NoteDetail> {
                       onPressed: () {
                         setState(() {
                           debugPrint('Save button clicked!');
+                          _saveData();
                         });
                       },
                     ),
@@ -104,6 +117,7 @@ class NoteDetailState extends State<NoteDetail> {
                       onPressed: () {
                         setState(() {
                           debugPrint('Delete button clicked!');
+                          _deleteData(note);
                         });
                       },
                     ),
@@ -115,5 +129,92 @@ class NoteDetailState extends State<NoteDetail> {
         ),
       ),
     );
+  }
+
+  void moveToLastScreen() {
+    Navigator.pop(context, true);
+  }
+
+  // Convert the String priority in the form of boolean before saving int to db
+  void updatePriorityAsInt(Priorities value) {
+    switch (value) {
+      case Priorities.high:
+        note!.priority = 1;
+        break;
+      case Priorities.low:
+        note!.priority = 0;
+        break;
+    }
+  }
+
+  // Convert the boolean priority in the form of String to display in Dropdown menu
+  Priorities getPriorityAsInt(int value) {
+    Priorities? priority;
+    switch (value) {
+      case 1:
+        priority = Priorities.high;
+        break;
+      case 0:
+        priority = Priorities.low;
+        break;
+    }
+    return priority!;
+  }
+
+  // Update the title of Note object
+  void updateTitle() {
+    note!.title = titleController.text;
+  }
+
+  // Update the description of Note object
+  void updateDescription() {
+    note!.description = descriptionController.text;
+  }
+
+  //Save data to database
+  void _saveData() async {
+    moveToLastScreen();
+    note!.date = DateFormat.yMMMd().format(DateTime.now());
+    int result;
+    if (note?.id != null) {
+      result = await databaseHelper.updateNote(note!);
+    } else {
+      result = await databaseHelper.insertNote(note!);
+    }
+
+    if (result != 0) {
+      //Success
+      _showAlertDialog('Status', 'Note saved successfully');
+    } else {
+      //Failure
+      _showAlertDialog('Status', 'Problem saving note');
+    }
+  }
+
+  // AlertDialog for the database operation
+  void _showAlertDialog(String title, String message) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    showDialog(context: context, builder: (_) => alertDialog);
+  }
+
+  void _deleteData(Note? note) async {
+    moveToLastScreen();
+    // Case 1 delete new note
+    if (note!.id == null) {
+      _showAlertDialog('Status', 'No note was deleted');
+      return;
+    }
+
+    // Case 2 delete existing note
+    int result = await databaseHelper.deleteNote(note.id);
+
+    if (result != 0) {
+      _showAlertDialog('Status', 'Note deleted successfully');
+    } else {
+      _showAlertDialog('Status', 'Error occured while deleting note');
+    }
   }
 }

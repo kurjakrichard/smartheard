@@ -2,7 +2,7 @@ class Note {
   int? _id;
   late String _title;
   late String _date;
-  late bool _priority;
+  late int _priority;
   String? _description;
 
   Note(this._title, this._date, this._priority, [this._description]);
