@@ -18,7 +18,7 @@ class Note {
   set priority(value) => _priority = value;
   get description => _description;
   set description(value) =>
-      value.toString().length <= 255 ? description = value : null;
+      value.toString().length <= 255 ? _description = value : null;
 
 //Convert a Note object to a Map opject
   Map<String, dynamic> toMap() {

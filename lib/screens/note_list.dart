@@ -68,11 +68,12 @@ class _NoteListState extends State<NoteList> {
                       color: Colors.grey,
                     ),
                     onTap: () {
+                      debugPrint('Delete icon clicked');
                       _delete(context, noteList![position]);
                     },
                   ),
                   onTap: () {
-                    debugPrint('Delete icon clicked');
+                    debugPrint('Edit note ${noteList![position].description}');
                     navigatetoDetail(noteList![position], 'Edit note');
                   }));
         });
@@ -119,14 +120,15 @@ class _NoteListState extends State<NoteList> {
 
   void _delete(BuildContext context, Note note) async {
     int result = await databaseHelper.deleteNote(note.id);
+    debugPrint(result.toString());
     if (result != 0) {
-      _showSnackBar(context, 'Note deleted successfully');
+      _showSnackBar('Note deleted successfully', context);
       updateListView();
     }
   }
 
-  void _showSnackBar(BuildContext context, String message) {
-    ScaffoldMessengerState().showSnackBar(SnackBar(content: Text(message)));
+  void _showSnackBar(String message, BuildContext context) {
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void updateListView() {

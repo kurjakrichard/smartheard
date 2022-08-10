@@ -23,13 +23,15 @@ class NoteDetailState extends State<NoteDetail> {
   Priorities dropDownItemSelected = Priorities.low;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  Note? note = Note('', '', 0, '');
+  Note? note;
 
   @override
   Widget build(BuildContext context) {
+    note = widget.note;
+    debugPrint('A description ${note!.description}');
     TextStyle titleStyle = Theme.of(context).textTheme.subtitle1!;
-    titleController.text = widget.note.title;
-    descriptionController.text = widget.note.description;
+    titleController.text = note!.title;
+    descriptionController.text = note?.description ??= '';
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +64,7 @@ class NoteDetailState extends State<NoteDetail> {
               child: TextField(
                 controller: titleController,
                 onChanged: (value) {
-                  debugPrint('Valami változott');
+                  debugPrint('Title változott');
                   updateTitle();
                 },
                 decoration: InputDecoration(
@@ -77,7 +79,7 @@ class NoteDetailState extends State<NoteDetail> {
               child: TextField(
                 controller: descriptionController,
                 onChanged: (value) {
-                  debugPrint('Valami változott');
+                  debugPrint('Description változott');
                   updateDescription();
                 },
                 decoration: InputDecoration(
