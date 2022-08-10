@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Home5 extends StatefulWidget {
-  const Home5({Key? key}) : super(key: key);
+class InterestCalculator extends StatefulWidget {
+  const InterestCalculator({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _Home5State();
+    return _InterestCalculatorState();
   }
 }
 
-class _Home5State extends State<Home5> {
+class _InterestCalculatorState extends State<InterestCalculator> {
   final List<String> _currencies = ['Forint', 'Dollár', 'Euró', 'Egyéb'];
   String? _currencyItemSelected;
   final _formKey = GlobalKey<FormState>();
