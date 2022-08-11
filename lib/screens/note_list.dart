@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'note_detail.dart';
-import '../utils/database_helper.dart';
+import '../services/database_helper.dart';
 import '../models/note.dart';
 
 class NoteList extends StatefulWidget {

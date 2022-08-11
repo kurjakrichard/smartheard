@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/note.dart';
-import '../utils/database_helper.dart';
+import '../services/database_helper.dart';
 
 enum Priorities { high, low }
 
