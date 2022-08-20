@@ -122,6 +122,7 @@ class _NoteListState extends State<NoteList> {
     int result = await databaseHelper.deleteNote(note.id);
     debugPrint(result.toString());
     if (result != 0) {
+      if (!mounted) return;
       _showSnackBar('Note deleted successfully', context);
       updateListView();
     }
