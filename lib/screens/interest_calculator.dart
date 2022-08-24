@@ -127,7 +127,7 @@ class _InterestCalculatorState extends State<InterestCalculator> {
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          if (!checkNumbers(value)) {
             return 'Kérlek számot adj meg!';
           }
           return null;
@@ -135,8 +135,7 @@ class _InterestCalculatorState extends State<InterestCalculator> {
         keyboardType: TextInputType.number,
         controller: controller,
         decoration: InputDecoration(
-            errorStyle:
-                const TextStyle(color: Colors.yellowAccent, fontSize: 15.0),
+            errorStyle: const TextStyle(color: Colors.red, fontSize: 15.0),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
             labelText: labelText,
@@ -161,5 +160,14 @@ class _InterestCalculatorState extends State<InterestCalculator> {
     termController.text = '';
     _displayResult = '';
     _currencyItemSelected = _currencies[0];
+  }
+
+  bool checkNumbers(String? value) {
+    try {
+      double checknumber = double.parse(value!);
+      return true;
+    } on Exception {
+      return false;
+    }
   }
 }
