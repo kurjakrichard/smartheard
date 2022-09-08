@@ -164,6 +164,7 @@ class _InterestCalculatorState extends State<InterestCalculator> {
 
   bool checkNumbers(String? value) {
     try {
+      // ignore: unused_local_variable
       double checknumber = double.parse(value!);
       return true;
     } on Exception {

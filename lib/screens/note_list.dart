@@ -129,7 +129,8 @@ class _NoteListState extends State<NoteList> {
   }
 
   void _showSnackBar(String message, BuildContext context) {
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void updateListView() {

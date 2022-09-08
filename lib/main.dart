@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smartheard/screens/note_list.dart';
 
-import 'screens/interest_calculator.dart';
-/*import 'screens/home.dart';
+/*import 'screens/interest_calculator.dart';
+import 'screens/home.dart';
 import 'screens/home2.dart';
 import 'screens/home3.dart';
 import 'screens/home4.dart';
@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo, onPrimary: Colors.white)),
+                    backgroundColor: Colors.indigo,
+                    foregroundColor: Colors.white)),
             appBarTheme: const AppBarTheme(color: Colors.indigo)),
-        home: const InterestCalculator());
+        home: const NoteList());
   }
 }
