@@ -29,7 +29,7 @@ class NoteDetailState extends State<NoteDetail> {
   Widget build(BuildContext context) {
     note = widget.note;
     debugPrint('A description ${note!.description}');
-    TextStyle titleStyle = Theme.of(context).textTheme.subtitle1!;
+    TextStyle titleStyle = Theme.of(context).textTheme.titleMedium!;
     titleController.text = note!.title;
     descriptionController.text = note?.description ??= '';
 
